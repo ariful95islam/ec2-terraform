@@ -8,7 +8,7 @@ variable subnet_cidr_block {
 }
 variable avail_zone {
     description = "The availability zone for the subnet"
-    default = "eu-west-2"
+    default = "eu-west-2a"
 }
 variable env_prefix {
     description = "The prefix for the environment"
@@ -22,7 +22,8 @@ variable instance_type {
     description = "The instance type to use"
     default = "t2.micro"
 }
-variable public_key_location {
-    description = "The location of the public key to use"
+variable public_key_string {
+    description = "The string of the public key to use"
+    type = "string"
     default = ""
 }

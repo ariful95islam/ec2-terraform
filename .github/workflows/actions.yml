@@ -21,11 +21,15 @@ jobs:
     - name: Terraform Initialize
       run: terraform init
 
+    - name: Set Public Key from Secrets
+      run: echo "PUBLIC_KEY=${{ secrets.SSH_PUBLIC_KEY }}" >> $GITHUB_ENV
+    
     - name: Terraform Apply
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: terraform apply -auto-approve
+      run: terraform apply -auto-approve -var="public_key_location=$PUBLIC_KEY"
+
 
     # Setup private SSH key to access the EC2 instance
     - name: Setup SSH Private Key
