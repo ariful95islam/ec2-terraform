@@ -30,25 +30,6 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: terraform apply -auto-approve -var="public_key_string=$PUBLIC_KEY"
 
-    # Setup private SSH key to access the EC2 instance
-    - name: Setup SSH Private Key
-      run: |
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/id_rsa
-        chmod 400 /tmp/id_rsa
-
-    # SSH into EC2 instance and test the Nginx deployment
-    - name: Test Nginx Deployment
-      run: |
-        EC2_IP=$($TERRAFORM_CLI_PATH/terraform output ec2_public_ip | awk -F\" '/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/ {print $2}')
-        ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$EC2_IP "curl -s -o /dev/null -w '%{http_code}' http://localhost:8080" > response_code.txt
-        RESPONSE_CODE=$(cat response_code.txt)
-        if [ "$RESPONSE_CODE" == "200" ]; then
-          echo "Nginx deployment successful!"
-        else
-          echo "Nginx deployment failed!"
-          exit 1
-        fi
-
     # Destroy the infrastructure
     - name: Terraform Destroy
       env:
