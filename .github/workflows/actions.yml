@@ -39,7 +39,7 @@ jobs:
     # SSH into EC2 instance and test the Nginx deployment
     - name: Test Nginx Deployment
       run: |
-        EC2_IP=$($TERRAFORM_CLI_PATH/terraform output ec2_public_ip | awk '/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/{print $NF}')
+        EC2_IP=$($TERRAFORM_CLI_PATH/terraform output ec2_public_ip | awk -F\" '/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/ {print $2}')
         ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ec2-user@$EC2_IP "curl -s -o /dev/null -w '%{http_code}' http://localhost:8080" > response_code.txt
         RESPONSE_CODE=$(cat response_code.txt)
         if [ "$RESPONSE_CODE" == "200" ]; then
