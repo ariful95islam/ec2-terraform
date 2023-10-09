@@ -16,7 +16,7 @@ variable env_prefix {
 }
 variable my_ip {
     description = "The IP address to allow SSH access from"
-    default = "0.0.0.0/24"
+    default = "0.0.0.0/0"
 }
 variable instance_type {
     description = "The instance type to use"
