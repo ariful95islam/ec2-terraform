@@ -24,6 +24,6 @@ variable instance_type {
 }
 variable public_key_string {
     description = "The string of the public key to use"
-    type = "string"
+    type = string
     default = ""
 }
