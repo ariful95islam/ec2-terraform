@@ -19,7 +19,7 @@ avail_zone          = "<AWS Availability Zone>"
 env_prefix          = "<Environment Prefix>"
 my_ip               = "<Your IP Address>"
 instance_type       = "<AWS EC2 Instance Type>"
-public_key_location = "<Path to your SSH Public Key>"
+public_key_string = "<Your SSH Public Key>"
 ```
 
 - `vpc_cidr_block`: The IP range for the VPC in CIDR format, e.g., "10.0.0.0/16".
@@ -28,7 +28,7 @@ public_key_location = "<Path to your SSH Public Key>"
 - `env_prefix`: A prefix for naming AWS resources, e.g., "prod", "staging".
 - `my_ip`: Your IP address to allow SSH access to the EC2 instance, e.g., "203.0.113.0/32".
 - `instance_type`: The type of EC2 instance to deploy, e.g., "t2.micro".
-- `public_key_location`: The file path of your SSH public key, e.g., "~/.ssh/id_rsa.pub".
+- `public_key_string`: The output of file path of your SSH public key, e.g., "~/.ssh/id_rsa.pub".
 
 ## Usage
 

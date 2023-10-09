@@ -102,11 +102,6 @@ data "aws_ami" "latest_amazon_linux_image" {
 resource "aws_key_pair" "ssh_key" {
 	key_name = "server-key"
 	public_key = var.public_key_string
-// This will ensure key is not created if it already exists
-	lifecycle {
-    create_before_destroy = true
-    ignore_changes        = [key_name, public_key]
-  	}
 }
 
 resource "aws_instance" "myapp_server" {
