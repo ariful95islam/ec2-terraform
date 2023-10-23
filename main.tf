@@ -105,6 +105,7 @@ resource "aws_key_pair" "ssh_key" {
 }
 
 resource "aws_instance" "myapp_server" {
+	count = 3  # This will create three instances
 	ami = data.aws_ami.latest_amazon_linux_image.id
 	instance_type = var.instance_type
 
@@ -120,14 +121,13 @@ resource "aws_instance" "myapp_server" {
 
     //user-data is used to input commands
     //will only work first time
-    user_data = file("install_docker.sh")
+    //user_data = file("install_docker.sh")
 
-	tags = {
-		Name = "${var.env_prefix}-server"
-	}  
+  tags = {
+    Name = "${var.env_prefix}-server-${count.index + 1}"  # This will name your instances with a unique identifier (1, 2, 3)
+  }
 }
 
-// easy output of public ip to terminal
-output "ec2_public_ip" {
-	value = aws_instance.myapp_server.public_ip
+output "ec2_public_ips" {
+  value = aws_instance.myapp_server[*].public_ip  # This will output a list of the public IPs for your instances
 }
